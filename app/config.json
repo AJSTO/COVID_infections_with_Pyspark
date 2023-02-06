@@ -1,0 +1,5 @@
+{
+  "app_name": "covidETL",
+  "source_data_path": "./data/covid_infections.csv",
+  "output_data_path": "data/aggregates"
+}
