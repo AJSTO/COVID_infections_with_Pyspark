@@ -1,8 +1,23 @@
-from pyspark.sql.functions import col, format_string, date_format
+import pyspark
+from pyspark.sql.functions import format_string, date_format, col
 
 
 def _extract_data(spark, config):
-    """ Load data from csv file """
+    """
+    Extract covid infections information from CSV file.
+
+    Parameters
+    ----------
+    spark : object
+        SparkSession built in main.py.
+    config : json object
+        Json file with information about Bigquery project, dataset, tables, credentials.
+
+    Returns
+    -------
+    Pyspark Dataframe
+        Extracted Pyspark Dataframe of covid infection informations.
+    """
     return spark.read.csv(
         f"{config.get('source_data_path')}",
         sep=';',
@@ -11,17 +26,27 @@ def _extract_data(spark, config):
     )
 
 
-def _infections_per_day_agg(covid_df):
-    """ Create aggregate of infections per day per unit """
-    # Getting infections per day per voivodship id
-    voivodship_infection = covid_df.groupBy('teryt_woj', 'data_rap_zakazenia') \
+def _infections_per_day_agg(covid_dataframe):
+    """
+    Create aggregate of infections per day per unit.
+
+    Parameters
+    ----------
+    covid_dataframe: object
+        Extracted Pyspark Dataframe of covid infections info.
+
+    Returns
+    -------
+    Pyspark Dataframe
+        Calculated aggregate of infections per day per unit.
+    """
+    voivodship_infection = covid_dataframe.groupBy('teryt_woj', 'data_rap_zakazenia') \
         .sum() \
         .select(
         'data_rap_zakazenia',
         'teryt_woj',
         'sum(liczba_zaraportowanych_zakazonych)'
     )
-    # Dropping null values in voivodship column
     voivodship_infection = voivodship_infection.dropna(
         how='any',
         thresh=None,
@@ -32,7 +57,6 @@ def _infections_per_day_agg(covid_df):
         "unit_id",
         format_string("%02d", "teryt_woj")
     )
-    # Dropping teryt_woj column, prepared above unit_id column to merge with county table
     voivodship_infection = voivodship_infection.drop('teryt_woj')
     # Rename column name
     voivodship_infection = voivodship_infection.withColumnRenamed(
@@ -42,11 +66,7 @@ def _infections_per_day_agg(covid_df):
     voivodship_infection = voivodship_infection.withColumn(
         "date", date_format(col('data_rap_zakazenia'), "dd-MM-yyyy")
     )
-    # Dropping unnecessary column
-    voivodship_infection = voivodship_infection.drop('data_rap_zakazenia')
-
-    # Getting infections per day per voivodship id
-    county_infection = covid_df.groupBy('teryt_pow', 'data_rap_zakazenia') \
+    county_infection = covid_dataframe.groupBy('teryt_pow', 'data_rap_zakazenia') \
         .sum() \
         .select(
         'data_rap_zakazenia',
@@ -63,7 +83,6 @@ def _infections_per_day_agg(covid_df):
         "unit_id",
         format_string("%04d", "teryt_pow")
     )
-    # Dropping teryt_pow column, prepared above unit_id column to merge with voivodship table
     county_infection = county_infection.drop('teryt_pow')
     # Rename column name
     county_infection = county_infection.withColumnRenamed(
@@ -73,19 +92,27 @@ def _infections_per_day_agg(covid_df):
     county_infection = county_infection.withColumn(
         "date", date_format(col('data_rap_zakazenia'), "dd-MM-yyyy")
     )
-    # Dropping unnecessary column
-    county_infection = county_infection.drop('data_rap_zakazenia')
     # Union two generated dataframes into one
     infections_per_day_per_unit = voivodship_infection.union(county_infection)
     infections_per_day_per_unit = infections_per_day_per_unit.select(
-        'date', 'unit_id', 'sum_of_infections'
+        'date', 'unit_id', 'sum_of_infections',
     )
 
     return infections_per_day_per_unit
 
 
 def _load_agg(config, transformed_df):
-    """ Save aggregates to Bigquery """
+    """
+    Saving created table of aggregated infections per unit id per day.
+    Mode of saving data - append. Writing pyspark Dataframe directly Bigquery table.
+
+    Parameters
+    ----------
+    config : json object
+        Json file with information about Bigquery project, dataset, tables.
+    transformed_df: object
+        Transformed Pyspark Dataframe of covid infection aggregates per day per unit id.
+    """
     transformed_df.write.format("bigquery") \
         .option("credentialsFile", config.get('source_credentials')) \
         .option("writeMethod", "direct") \
@@ -94,5 +121,20 @@ def _load_agg(config, transformed_df):
 
 
 def run_job(spark, config):
-    """ Run covid aggregates job """
-    _load_agg(config, _infections_per_day_agg(_extract_data(spark, config)))
+    """
+    Running ETL job for getting daily aggregate per day per unit id.
+
+    Parameters
+    ----------
+    spark : object
+        SparkSession built in main.py.
+    config : json object
+        Json file with information about Bigquery project, dataset, tables.
+    """
+    _load_agg(
+        config, _infections_per_day_agg(
+            _extract_data(
+                spark, config
+            )
+        )
+    )
