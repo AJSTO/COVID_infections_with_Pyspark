@@ -91,7 +91,7 @@ Examples of charts:
 
 ## ⚙️ Run Pyspark locally
 - Clone the project
-- Go to the project directory:
+- Go to the app folder in project directory:
 Type in CLI:
 ```bash
   $  spark-submit --jars bigquery_connection/spark-3.1-bigquery-0.28.0-preview.jar --files config.json main.py --job covid_aggregates
