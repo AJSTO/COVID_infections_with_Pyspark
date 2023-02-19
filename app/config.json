@@ -1,8 +1,8 @@
 {
   "app_name": "covidETL",
   "source_data_path": "./data/covid_infections.csv",
-  "source_credentials": "bq_con/credentials.json",
-  "biquery_table_path": "pyspark-covid.covid_dataset.covid_aggregates",
-  "bigquery_table_path_short": "covid_dataset.covid_aggregates1",
-  "biquery_project": "pyspark-covid"
+  "source_credentials": "bigquery_connection/credentials.json",
+  "bigquery_table_path": "pyspark-covid.covid_dataset.daily_infections",
+  "bigquery_table_path_short": "covid_dataset.daily_infections1",
+  "bigquery_project": "pyspark-covid"
 }
