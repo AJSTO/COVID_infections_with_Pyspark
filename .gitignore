@@ -5,6 +5,7 @@ covid_infections.csv
 .ipynb_checkpoints
 app/bigquery_connection/spark-3.1-bigquery-0.28.0-preview.jar
 app/bigquery_connection/GoogleBigQueryJDBC42.jar
+app/bigquery_connection/credentials.json
 app/tests/.pytest_cache
 app/.pytest_cache
 .DS_Store
