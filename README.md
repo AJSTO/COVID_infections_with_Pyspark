@@ -96,9 +96,11 @@ Type in CLI:
 ```bash
   $  spark-submit --jars bigquery_connection/spark-3.1-bigquery-0.28.0-preview.jar --files config.json main.py --job covid_aggregates
 ```
+## ⚙️ Run Pyspark via Dataproc
+[Submit a job via Dataproc](https://cloud.google.com/dataproc/docs/guides/submit-job)
 
 ## 🔎 Looker Studio
 Link to generated report in looker for Covid epidemic in Poland:
 
-[Covid empidemic in Poland - years 2021-2022](https://lookerstudio.google.com/reporting/ba55e7ec-a025-42a7-b499-580fad4a57c7)
-![IMG LOOKER](https://i.ibb.co/B37g8gm/Zrzut-ekranu-2023-02-19-o-22-57-13.png)
+[Covid empidemic in Poland - years 2021-2022](https://lookerstudio.google.com/reporting/2be2f844-a75d-40b8-bf1f-cc44913e3a87)
+![IMG LOOKER](https://i.postimg.cc/52F9rkD5/Zrzut-ekranu-2023-03-9-o-17-31-55.png)
