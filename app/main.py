@@ -20,7 +20,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# TO RUN PYSPARK JOB via console:
-#  pytest && spark-submit --jars bigquery_connection/spark-3.1-bigquery-0.28.0-preview.jar --files config.json main.py --job covid_aggregates
-
