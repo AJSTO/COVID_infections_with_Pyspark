@@ -64,7 +64,7 @@ def _infections_per_day_agg(covid_dataframe):
     )
     # Convert timestamp to date in format DD-MM-YYYY
     voivodship_infection = voivodship_infection.withColumn(
-        "date", to_date(col('data_rap_zakazenia'), "dd-MM-yyyy")
+        "date", to_date(col('data_rap_zakazenia'))
     )
     county_infection = covid_dataframe.groupBy('teryt_pow', 'data_rap_zakazenia') \
         .sum() \
@@ -90,7 +90,7 @@ def _infections_per_day_agg(covid_dataframe):
     )
     # Convert timestamp to date in format DD-MM-YYYY
     county_infection = county_infection.withColumn(
-        "date", to_date(col('data_rap_zakazenia'), "dd-MM-yyyy")
+        "date", to_date(col('data_rap_zakazenia'))
     )
     infections_per_day_per_unit = voivodship_infection.union(county_infection)
     infections_per_day_per_unit = infections_per_day_per_unit.select(
