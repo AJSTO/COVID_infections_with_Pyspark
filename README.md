@@ -102,5 +102,5 @@ Type in CLI:
 ## 🔎 Looker Studio
 Link to generated report in looker for Covid epidemic in Poland:
 
-[Covid empidemic in Poland - years 2021-2022](https://lookerstudio.google.com/reporting/2be2f844-a75d-40b8-bf1f-cc44913e3a87)
-![IMG LOOKER](https://i.postimg.cc/52F9rkD5/Zrzut-ekranu-2023-03-9-o-17-31-55.png)
+[Covid empidemic in Poland - years 2021-2022](https://lookerstudio.google.com/reporting/3da83dfb-98f4-4ca7-acf6-078f9b4e944b)
+![IMG LOOKER](https://github.com/AJSTO/COVID_infections_with_Pyspark/blob/master/img/gif-covid-infections.gif)
