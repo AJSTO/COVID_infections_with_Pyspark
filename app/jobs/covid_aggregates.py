@@ -1,5 +1,5 @@
 import pyspark
-from pyspark.sql.functions import format_string, date_format, col
+from pyspark.sql.functions import format_string, to_date, col
 
 
 def _extract_data(spark, config):
@@ -64,7 +64,7 @@ def _infections_per_day_agg(covid_dataframe):
     )
     # Convert timestamp to string in format DD-MM-YYYY
     voivodship_infection = voivodship_infection.withColumn(
-        "date", date_format(col('data_rap_zakazenia'), "dd-MM-yyyy")
+        "date", to_date(col('data_rap_zakazenia'), "dd-MM-yyyy")
     )
     county_infection = covid_dataframe.groupBy('teryt_pow', 'data_rap_zakazenia') \
         .sum() \
@@ -90,7 +90,7 @@ def _infections_per_day_agg(covid_dataframe):
     )
     # Convert timestamp to string in format DD-MM-YYYY
     county_infection = county_infection.withColumn(
-        "date", date_format(col('data_rap_zakazenia'), "dd-MM-yyyy")
+        "date", to_date(col('data_rap_zakazenia'), "dd-MM-yyyy")
     )
     # Union two generated dataframes into one
     infections_per_day_per_unit = voivodship_infection.union(county_infection)
