@@ -19,7 +19,13 @@ For analysing data was created container with jupyter notebook.
 Pyspark was launched locally. 
 Pyspark was used to get the sum of infections reported on a given day for the voivodship and the poviat.
 The obtained data were loaded into a table in google bigquery and then visualized using Looker studio.
-In addition, the Pyspark application received tests that were written in pytest
+In addition, the Pyspark application received tests that were written in pytest.
+
+## 🔎 Looker Studio
+Link to generated report in looker for Covid epidemic in Poland:
+
+[Covid empidemic in Poland - years 2021-2022](https://lookerstudio.google.com/reporting/3da83dfb-98f4-4ca7-acf6-078f9b4e944b)
+![IMG LOOKER](https://github.com/AJSTO/COVID_infections_with_Pyspark/blob/master/img/gif-covid-infections.gif)
 
 ## 🗒️Table of COVID aggregates:
 ![IMG SCHEMA](https://i.ibb.co/jHQb0xN/Zrzut-ekranu-2023-02-19-o-23-33-31.png)
@@ -99,8 +105,3 @@ Type in CLI:
 ## ⚙️ Run Pyspark via Dataproc
 [Submit a job via Dataproc](https://cloud.google.com/dataproc/docs/guides/submit-job)
 
-## 🔎 Looker Studio
-Link to generated report in looker for Covid epidemic in Poland:
-
-[Covid empidemic in Poland - years 2021-2022](https://lookerstudio.google.com/reporting/3da83dfb-98f4-4ca7-acf6-078f9b4e944b)
-![IMG LOOKER](https://github.com/AJSTO/COVID_infections_with_Pyspark/blob/master/img/gif-covid-infections.gif)
