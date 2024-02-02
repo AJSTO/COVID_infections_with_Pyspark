@@ -24,8 +24,8 @@ In addition, the Pyspark application received tests that were written in pytest.
 ## 🔎 Looker Studio
 Link to generated report in looker for Covid epidemic in Poland:
 
-[Covid empidemic in Poland - years 2021-2022](https://lookerstudio.google.com/reporting/3da83dfb-98f4-4ca7-acf6-078f9b4e944b)
-![IMG LOOKER](https://github.com/AJSTO/COVID_infections_with_Pyspark/blob/master/img/gif-covid-infections.gif)
+[Covid empidemic in Poland - years 2021-2022](https://lookerstudio.google.com/u/0/reporting/97a6f6e4-a54f-4825-800f-3f232afb019b/page/6lfmD)
+![IMG LOOKER](https://github.com/AJSTO/COVID_infections_with_Pyspark/blob/master/img/COVID_19_infections_dashboard.gif)
 
 ## 🗒️Table of COVID aggregates:
 ![IMG SCHEMA](https://i.ibb.co/jHQb0xN/Zrzut-ekranu-2023-02-19-o-23-33-31.png)
